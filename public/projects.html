@@ -1,0 +1,59 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ryker Lee - Messages</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const messageList = document.getElementById('messageList');
+      try {
+        const res = await fetch('/api/messages');
+        const messages = await res.json();
+
+        if (!messages.length) {
+          messageList.innerHTML = '<p>No messages submitted yet.</p>';
+          return;
+        }
+
+        messages.forEach(msg => {
+          const item = document.createElement('div');
+          item.className = 'message-card';
+          item.innerHTML = `
+            <h3>${msg.name} <small>(${msg.email})</small></h3>
+            <p><strong>Subject:</strong> ${msg.subject}</p>
+            <p>${msg.message}</p>
+            <p><small>${new Date(msg.timestamp).toLocaleString()}</small></p>
+            <hr />
+          `;
+          messageList.appendChild(item);
+        });
+      } catch (err) {
+        messageList.textContent = 'Failed to load messages.';
+      }
+    });
+  </script>
+</head>
+<body>
+  <nav>
+    <div class="nav-wrapper">
+      <div class="nav-container">
+        <a href="index.html">Home</a>
+        <a href="experience.html">Experience</a>
+        <a href="contact.html">Contact</a>
+        <a href="admin.html">Admin</a>
+      </div>
+    </div>
+  </nav>
+
+  <header>
+    <h1>Submitted Messages</h1>
+    <p>Here are the messages sent through the contact form:</p>
+  </header>
+
+  <section id="messageList" style="padding: 1rem;"></section>
+</body>
+</html>
