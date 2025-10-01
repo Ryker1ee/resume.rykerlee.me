@@ -1,10 +1,199 @@
-[
-  {
-    "name": "Steph Curry",
-    "email": "CurryBrand@ua.org",
-    "subject": "opportunity",
-    "message": "Call me asap",
-    "timestamp": "2025-05-08T02:15:58.810Z",
-    "response": "Will do!"
-  }
-]
+{
+  "courses": [
+    /* Completed */
+    {
+      "code": "SPAN 202",
+      "title": "Intermediate Spanish II (AP)",
+      "credits": 3,
+      "term": "Summer 2023",
+      "status": "completed",
+      "category": "Minor"
+    },
+    {
+      "code": "CSC 134",
+      "title": "Intro to Cyber Operations",
+      "credits": 3,
+      "term": "Spring 2023",
+      "status": "completed",
+      "category": "Major"
+    },
+    {
+      "code": "CSC 150",
+      "title": "Computer Science I",
+      "credits": 3,
+      "term": "Fall 2023",
+      "status": "completed",
+      "category": "Major"
+    },
+    {
+      "code": "CSC 163",
+      "title": "Hardware/Virtualization/Data Com",
+      "credits": 3,
+      "term": "Fall 2023",
+      "status": "completed",
+      "category": "Major"
+    },
+    {
+      "code": "ECON 201",
+      "title": "Honors: Principles of Microeconomics",
+      "credits": 3,
+      "term": "Fall 2024",
+      "status": "completed",
+      "category": "General Education"
+    },
+    {
+      "code": "CMST 215",
+      "title": "Honors: Public Speaking",
+      "credits": 3,
+      "term": "Fall 2024",
+      "status": "completed",
+      "category": "General Education"
+    },
+    {
+      "code": "CSC 105",
+      "title": "Introduction to Computers",
+      "credits": 3,
+      "term": "Spring 2024",
+      "status": "completed",
+      "category": "Major"
+    },
+    {
+      "code": "CSC 250",
+      "title": "Computer Science II",
+      "credits": 3,
+      "term": "Spring 2024",
+      "status": "completed",
+      "category": "Major"
+    },
+    {
+      "code": "CSC 285",
+      "title": "Networking I",
+      "credits": 3,
+      "term": "Spring 2024",
+      "status": "completed",
+      "category": "Major"
+    },
+    {
+      "code": "HON 102",
+      "title": "Intro Honors: Popular Culture",
+      "credits": 1,
+      "term": "Fall 2024",
+      "status": "completed",
+      "category": "Honors"
+    },
+    {
+      "code": "CSC 234",
+      "title": "Software Security",
+      "credits": 3,
+      "term": "Fall 2024",
+      "status": "completed",
+      "category": "Major"
+    },
+    {
+      "code": "CSC 300",
+      "title": "Data Structures",
+      "credits": 3,
+      "term": "Fall 2024",
+      "status": "completed",
+      "category": "Major"
+    },
+    {
+      "code": "CSC 409",
+      "title": "Operating Environments",
+      "credits": 3,
+      "term": "Fall 2024",
+      "status": "completed",
+      "category": "Major"
+    },
+    {
+      "code": "SOC 285",
+      "title": "Society and Technology",
+      "credits": 3,
+      "term": "Spring 2025",
+      "status": "completed",
+      "category": "General Education"
+    },
+    {
+      "code": "CSC 314",
+      "title": "Assembly Language",
+      "credits": 3,
+      "term": "Spring 2025",
+      "status": "completed",
+      "category": "Major"
+    },
+    {
+      "code": "CSC 334",
+      "title": "Web Development",
+      "credits": 3,
+      "term": "Spring 2025",
+      "status": "completed",
+      "category": "Major"
+    },
+    {
+      "code": "CSC 385",
+      "title": "Networking II",
+      "credits": 3,
+      "term": "Spring 2025",
+      "status": "completed",
+      "category": "Major"
+    },
+    {
+      "code": "MATH 201",
+      "title": "Intro to Discrete Math",
+      "credits": 3,
+      "term": "Spring 2025",
+      "status": "completed",
+      "category": "General Education"
+    },
+    {
+      "code": "GS 100",
+      "title": "University Experience",
+      "credits": 0,
+      "term": "Fall 2024",
+      "status": "completed",
+      "category": "Other"
+    },
+
+    /* In Progress (Fall 2025) */
+    {
+      "code": "CSC 420",
+      "title": "Cellular/Mobile Communications",
+      "credits": 3,
+      "term": "Fall 2025",
+      "status": "in_progress",
+      "category": "Major"
+    },
+    {
+      "code": "CSC 428",
+      "title": "Reverse Engineering",
+      "credits": 3,
+      "term": "Fall 2025",
+      "status": "in_progress",
+      "category": "Major"
+    },
+    {
+      "code": "CSC 436",
+      "title": "Offensive Network Security",
+      "credits": 3,
+      "term": "Fall 2025",
+      "status": "in_progress",
+      "category": "Major"
+    },
+    {
+      "code": "CSC 439",
+      "title": "Threat Hunting & Incident Response",
+      "credits": 3,
+      "term": "Fall 2025",
+      "status": "in_progress",
+      "category": "Major"
+    },
+    {
+      "code": "ENGL 101",
+      "title": "Composition I",
+      "credits": 3,
+      "term": "Fall 2025",
+      "status": "in_progress",
+      "category": "General Education"
+    }
+  ]
+}
