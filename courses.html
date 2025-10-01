@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Courses – Ryker Lee</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="experience.html">Experience</a>
+      <a href="projects.html">Projects</a>
+      <a class="active" href="courses.html">Courses</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>Courses</h1>
+
+    <section>
+      <h2>Currently Taking</h2>
+      <div id="courses-in-progress" class="cards grid"></div>
+    </section>
+
+    <section style="margin-top:2rem;">
+      <h2>Completed</h2>
+      <div id="courses-completed" class="cards grid"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> Ryker Lee</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Minimal bootstrapping so we reuse script.js helpers
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Fetch courses from database.json and render them
+    fetch('database.json')
+      .then(r => r.json())
+      .then(db => {
+        const courses = Array.isArray(db.courses) ? db.courses : [];
+        const inProg = courses.filter(c => (c.status || '').toLowerCase() === 'in progress');
+        const done   = courses.filter(c => (c.status || '').toLowerCase() === 'completed');
+
+        const card = (c) => {
+          const when = [c.term, c.year].filter(Boolean).join(' ');
+          const where = [c.school, c.department].filter(Boolean).join(' • ');
+          const note  = c.note ? `<p class="muted">${c.note}</p>` : '';
+          return `
+            <article class="card">
+              <div class="card-body">
+                <h3 class="card-title">${c.code ? c.code + ': ' : ''}${c.title || 'Untitled Course'}</h3>
+                <p class="card-subtitle">${when}${where ? ' • ' + where : ''}</p>
+                ${c.topics && c.topics.length ? `<ul class="pill-list">${c.topics.map(t=>`<li>${t}</li>`).join('')}</ul>` : ''}
+                ${note}
+              </div>
+            </article>
+          `;
+        };
+
+        document.getElementById('courses-in-progress').innerHTML = inProg.map(card).join('') || '<p class="muted">No current courses listed.</p>';
+        document.getElementById('courses-completed').innerHTML   = done.map(card).join('')   || '<p class="muted">No completed courses listed yet.</p>';
+      })
+      .catch(() => {
+        document.getElementById('courses-in-progress').innerHTML = '<p class="muted">Could not load courses.</p>';
+        document.getElementById('courses-completed').innerHTML   = '';
+      });
+  </script>
+</body>
+</html>
