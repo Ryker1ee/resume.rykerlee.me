@@ -8,7 +8,7 @@
 </head>
 <body>
 
-  <!-- NAV -->
+  <!-- NAV (same as the rest of the site) -->
   <nav>
     <div class="nav-wrapper">
       <div class="nav-container">
@@ -20,7 +20,7 @@
     </div>
   </nav>
 
-  <!-- PROFILE HEADER (same structure as your other pages) -->
+  <!-- PROFILE (identical layout: intro left, photo/links right) -->
   <section class="profile">
     <div class="profile-intro">
       <h1>RYKER LEE</h1>
@@ -52,7 +52,7 @@
     </div>
   </section>
 
-  <!-- PAGE CONTENT -->
+  <!-- PAGE CONTENT (uses your container/content spacing) -->
   <main id="courses-main" class="container">
     <h1>Courses</h1>
 
@@ -84,7 +84,7 @@
       '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
     }[m]));
 
-    // Term sorter (Spring=0, Summer=1, Fall=2)
+    // Sort helper (Spring=0, Summer=1, Fall=2)
     function termKey(termStr){
       const m = (termStr || '').match(/(Spring|Summer|Fall)\s+(\d{4})/i);
       if (!m) return { year:0, termIndex:-1 };
@@ -92,7 +92,7 @@
       return { year:parseInt(m[2],10), termIndex:map[m[1].toLowerCase()] ?? -1 };
     }
 
-    // One course list item (classes match your CSS: .course-title, .pill, .meta)
+    // One course list item (classes your CSS styles: .course-title, .pill, .meta)
     function renderItem(c){
       const left = (c.code ? esc(c.code)+': ' : '') +
                    `<span class="course-title">${esc(c.title || 'Untitled Course')}</span>`;
