@@ -392,7 +392,7 @@ section ul {
 section ul li {
   margin-bottom: 0.5rem;
 }
-
+ 
 .hero-text {
   max-width: 800px;
   margin: 0 auto;
@@ -532,46 +532,4 @@ table.work-history th {
     height: 14px;
     margin-right: 0.25rem;
   }
-  /* === Navbar fixes (no bullets, no big blue bars) === */
-.courses-page header { background: transparent; }
-.courses-page header::before,
-.courses-page header::after { display: none; }
-
-.site-nav { /* your simple horizontal nav */
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  gap: 1rem;
-  justify-content: center; /* or left, to match your other pages */
-}
-.site-nav li { margin: 0; padding: 0; }
-.site-nav a { /* keep your link styles; remove underline if you want */
-  text-decoration: underline; /* or none; match your theme */
-}
-
-
-.courses-container { max-width: 1100px; }
-  .course-card {
-     background: #171a1c;
-  border: 1px solid #262a2d;
-  border-radius: 12px;
-  padding: 1rem 1.25rem;
-  margin: .75rem 0 2rem;
-}
-
-.course-list { margin: 0; padding-left: 1.25rem; }
-.course-list li { margin: .5rem 0; line-height: 1.5; }
-.course-title { font-weight: 600; }
-.meta { display: inline-flex; gap: .4rem; flex-wrap: wrap; margin-left: .4rem; vertical-align: middle; }
-.pill {
-  border: 1px solid rgba(255,255,255,.15);
-  background: #1f2326;
-  color: #d9d9d9;
-  border-radius: 999px;
-  padding: .15rem .55rem;
-  font-size: .8rem;
-  opacity: .9;
-  white-space: nowrap;
-}
 }
