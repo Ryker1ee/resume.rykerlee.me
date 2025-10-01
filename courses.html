@@ -5,9 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Ryker Lee - Courses</title>
   <link rel="stylesheet" href="style.css"/>
+  <style>
+    #courses-root { max-width: 1100px; margin: 0 auto; padding: 2rem 1rem; }
+    #courses-root h1 { margin: 0 0 1rem 0; font-weight: 800; }
+    #courses-root h2 { margin: 1.75rem 0 .75rem; font-weight: 800; }
+    #courses-root h3 { margin: .75rem 0 .5rem; font-weight: 800; }
+    #courses-root .course-card{
+      background:#171a1c;
+      border:1px solid #262a2d;
+      border-radius:12px;
+      padding:1rem 1.25rem;
+      margin:.75rem 0 2rem;
+    }
+    #courses-root .course-list{
+      list-style:none;
+      margin:0;
+      padding:0;
+    }
+    #courses-root .course-list li{ margin:.55rem 0; line-height:1.5; }
+    #courses-root .course-title{ font-weight:700; }
+    #courses-root .meta{
+      display:inline-flex; gap:.4rem; flex-wrap:wrap;
+      margin-left:.45rem; vertical-align:middle;
+    }
+    #courses-root .pill{
+      background:#1f2326; color:#e6e6e6;
+      border:1px solid rgba(255,255,255,.15);
+      border-radius:999px; padding:.15rem .6rem;
+      font-size:.82rem; white-space:nowrap; line-height:1.1; opacity:.92;
+    }
+  </style>
 </head>
 <body>
-  <!-- NAV -->
   <nav>
     <div class="nav-wrapper">
       <div class="nav-container">
@@ -19,32 +48,24 @@
     </div>
   </nav>
 
-  <!-- MAIN COURSES CONTENT -->
-  <main class="container" id="courses-root">
+  <main id="courses-root">
     <h1>Courses</h1>
-    <!-- The script will render grouped sections here -->
   </main>
 
   <script>
-    // --- helpers ---
     const esc = s => String(s ?? '').replace(/[&<>"']/g, m => ({
       '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
     }[m]));
-
-    // Spring=0, Summer=1, Fall=2; higher year/term means newer
     function termKey(termStr){
       const m = (termStr || '').match(/(Spring|Summer|Fall)\s+(\d{4})/i);
-      if (!m) return { year: 0, termIndex: -1 };
-      const map = { spring:0, summer:1, fall:2 };
-      return { year: parseInt(m[2],10), termIndex: map[m[1].toLowerCase()] ?? -1 };
+      if (!m) return { year:0, termIndex:-1 };
+      const idx = { spring:0, summer:1, fall:2 }[m[1].toLowerCase()];
+      return { year: parseInt(m[2],10), termIndex: idx ?? -1 };
     }
-
-    // Extract numeric, e.g. "CSC 420" -> 420
     function codeNum(code){
       const m = String(code || '').match(/(\d{2,4})/);
       return m ? parseInt(m[1], 10) : 0;
     }
-
     function liHTML(c){
       const left = (c.code ? esc(c.code) + ': ' : '') +
                    `<span class="course-title">${esc(c.title || 'Untitled Course')}</span>`;
@@ -54,7 +75,6 @@
       if (typeof c.credits === 'number') pills.push(`<span class="pill">${esc(c.credits)} cr</span>`);
       return `<li>${left} <span class="meta">${pills.join(' ')}</span></li>`;
     }
-
     function renderCard(parent, title, items){
       if (!items.length) return;
       const card = document.createElement('div');
@@ -68,20 +88,15 @@
       card.appendChild(ul);
       parent.appendChild(card);
     }
-
     function renderBucket(root, bucketTitle, bucket){
       const sec = document.createElement('section');
       const h2 = document.createElement('h2');
       h2.textContent = bucketTitle;
       sec.appendChild(h2);
-
       renderCard(sec, 'Currently Taking', bucket.in_progress);
       renderCard(sec, 'Completed', bucket.completed);
-
       root.appendChild(sec);
     }
-
-    // --- main ---
     fetch('database.json')
       .then(r => {
         if (!r.ok) throw new Error('Failed to load database.json');
@@ -90,22 +105,15 @@
       .then(db => {
         const root = document.getElementById('courses-root');
         const courses = Array.isArray(db.courses) ? db.courses : [];
-
-        // Buckets by prefix + status
-        const buckets = {
-          CSC:   { in_progress: [], completed: [] },
-          Other: { in_progress: [], completed: [] }
-        };
-
+        const buckets = { CSC: { in_progress: [], completed: [] },
+                          Other: { in_progress: [], completed: [] } };
         for (const c of courses){
-          const isCSC   = /^CSC\b/i.test(c.code || '');
-          const status  = String(c.status || '').toLowerCase(); // 'in_progress' or 'completed'
-          const dest    = isCSC ? buckets.CSC : buckets.Other;
+          const isCSC  = /^CSC\b/i.test(c.code || '');
+          const status = String(c.status || '').toLowerCase();
+          const dest   = isCSC ? buckets.CSC : buckets.Other;
           if (status === 'in_progress') dest.in_progress.push(c);
           else if (status === 'completed') dest.completed.push(c);
         }
-
-        // Sort: CSC by numeric code; Other by newest term then code
         const byCSCNum = (a,b) => codeNum(a.code) - codeNum(b.code);
         const byTermThenCode = (a,b) => {
           const ka = termKey(a.term), kb = termKey(b.term);
@@ -113,20 +121,17 @@
           if (kb.termIndex !== ka.termIndex) return kb.termIndex - ka.termIndex;
           return String(a.code||'').localeCompare(String(b.code||''));
         };
-
         buckets.CSC.in_progress.sort(byCSCNum);
         buckets.CSC.completed.sort(byCSCNum);
         buckets.Other.in_progress.sort(byTermThenCode);
         buckets.Other.completed.sort(byTermThenCode);
-
-        // Render two grouped sections
         renderBucket(root, 'CSC', buckets.CSC);
         renderBucket(root, 'Other', buckets.Other);
       })
       .catch(err => {
         console.error(err);
-        const root = document.getElementById('courses-root');
-        root.innerHTML += '<p>Could not load courses.</p>';
+        document.getElementById('courses-root').innerHTML +=
+          '<p>Could not load courses.</p>';
       });
   </script>
 </body>
