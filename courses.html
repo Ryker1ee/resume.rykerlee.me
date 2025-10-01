@@ -12,8 +12,8 @@
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="experience.html">Experience</a></li>
-        <li><a class="active" href="courses.html">Courses</a></li>
         <li><a href="projects.html">Projects</a></li>
+        <li><a class="active" href="courses.html">Courses</a></li>
       </ul>
     </nav>
   </header>
@@ -21,18 +21,14 @@
   <main>
     <h1>Courses</h1>
 
-    <section aria-labelledby="inprog-heading">
-      <h2 id="inprog-heading">Currently Taking</h2>
-      <ul id="courses-in-progress">
-        <!-- populated by JS -->
-      </ul>
+    <section>
+      <h2>Currently Taking</h2>
+      <ul id="courses-in-progress"></ul>
     </section>
 
-    <section aria-labelledby="completed-heading" style="margin-top:1.5rem;">
-      <h2 id="completed-heading">Completed</h2>
-      <ul id="courses-completed">
-        <!-- populated by JS -->
-      </ul>
+    <section style="margin-top:1.5rem;">
+      <h2>Completed</h2>
+      <ul id="courses-completed"></ul>
     </section>
   </main>
 
@@ -41,38 +37,22 @@
   </footer>
 
   <script>
-    // Footer year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Helper: safe text
-    const esc = (s) => String(s ?? '').replace(/[&<>"']/g, m => ({
-      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-    }[m]));
+    const esc = (s) => String(s ?? '').replace(/[&<>"']/g, m => (
+      { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]
+    ));
 
-    // Render a single <li> for a course (no grades)
     function renderCourseItem(c) {
       const left = (c.code ? esc(c.code) + ': ' : '') + esc(c.title || 'Untitled Course');
-
-      // Optional small metadata trail (category, term, credits)
-      const metaBits = [];
-      if (c.category) metaBits.push(esc(c.category));
-      if (c.term) metaBits.push(esc(c.term));
-      if (typeof c.credits === 'number') metaBits.push(`${esc(c.credits)} cr`);
-      const meta = metaBits.length ? ` — ${metaBits.join(' • ')}` : '';
-
-      // Optional link and image support (if present in database.json)
-      const linkedTitle = c.link
-        ? `<a href="${esc(c.link)}" target="_blank" rel="noopener">${left}</a>`
-        : left;
-
-      const img = c.image
-        ? `<br><img src="${esc(c.image)}" alt="${esc(c.title || 'Course image')}" style="max-width:160px;height:auto;">`
-        : '';
-
-      return `<li>${linkedTitle}${meta}${img}</li>`;
+      const bits = [];
+      if (c.category) bits.push(esc(c.category));
+      if (c.term) bits.push(esc(c.term));
+      if (typeof c.credits === 'number') bits.push(`${esc(c.credits)} cr`);
+      const meta = bits.length ? ` — ${bits.join(' • ')}` : '';
+      return `<li>${left}${meta}</li>`;
     }
 
-    // Fetch and render
     fetch('database.json')
       .then(r => {
         if (!r.ok) throw new Error('Failed to load database.json');
@@ -82,21 +62,15 @@
         const courses = Array.isArray(db.courses) ? db.courses : [];
 
         const inProg = courses.filter(c => (c.status || '').toLowerCase() === 'in_progress');
-        const done   = courses.filter(c => (c.status || '').toLowerCase() === 'completed');
+        const done = courses.filter(c => (c.status || '').toLowerCase() === 'completed');
 
-        const inProgHTML = inProg.length
-          ? inProg.map(renderCourseItem).join('')
-          : '<li>No current courses listed.</li>';
+        document.getElementById('courses-in-progress').innerHTML =
+          inProg.length ? inProg.map(renderCourseItem).join('') : '<li>No current courses listed.</li>';
 
-        const doneHTML = done.length
-          ? done.map(renderCourseItem).join('')
-          : '<li>No completed courses listed yet.</li>';
-
-        document.getElementById('courses-in-progress').innerHTML = inProgHTML;
-        document.getElementById('courses-completed').innerHTML   = doneHTML;
+        document.getElementById('courses-completed').innerHTML =
+          done.length ? done.map(renderCourseItem).join('') : '<li>No completed courses listed yet.</li>';
       })
-      .catch(err => {
-        console.error(err);
+      .catch(() => {
         document.getElementById('courses-in-progress').innerHTML = '<li>Could not load courses.</li>';
         document.getElementById('courses-completed').innerHTML   = '';
       });
