@@ -2,59 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ryker Lee - Courses</title>
-  <link rel="stylesheet" href="style.css"/>
-  <style>
-    #courses-page {
-      max-width: 900px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
-
-    #courses-page h1 {
-      font-size: 2rem;
-      margin-bottom: 1.5rem;
-    }
-
-    #courses-page h2 {
-      font-size: 1.35rem;
-      margin: 2rem 0 1rem;
-      color: #3b82f6;
-    }
-
-    .course-section {
-      background: #111;
-      border: 1px solid #222;
-      border-radius: 12px;
-      padding: 1rem 1.25rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .course-list {
-      list-style: disc;
-      padding-left: 1.25rem;
-      margin: 0;
-    }
-
-    .course-list li {
-      margin-bottom: .75rem;
-    }
-
-    .meta {
-      display: inline-block;
-      background: #222;
-      border-radius: 9999px;
-      padding: .15rem .6rem;
-      font-size: .75rem;
-      margin-left: .4rem;
-      opacity: .85;
-    }
-
-    .muted { opacity:.6; }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
   <header>
     <nav>
       <ul>
@@ -66,17 +19,17 @@
     </nav>
   </header>
 
-  <main id="courses-page">
+  <main>
     <h1>Courses</h1>
 
-    <section>
-      <h2>Currently Taking</h2>
-      <div id="courses-in-progress"></div>
+    <section aria-labelledby="inprog-heading">
+      <h2 id="inprog-heading">Currently Taking</h2>
+      <ul id="courses-in-progress"></ul>
     </section>
 
-    <section>
-      <h2>Completed</h2>
-      <div id="courses-completed"></div>
+    <section aria-labelledby="completed-heading">
+      <h2 id="completed-heading">Completed</h2>
+      <ul id="courses-completed"></ul>
     </section>
   </main>
 
@@ -88,39 +41,59 @@
     // Footer year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Render courses from database.json
+    // Escape helper
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, m => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    }[m]));
+
+    // Optional: term sorting helper (Spring=0, Summer=1, Fall=2)
+    function termKey(termStr) {
+      const m = (termStr || '').match(/(Spring|Summer|Fall)\s+(\d{4})/i);
+      if (!m) return { year: 0, termIndex: -1 };
+      const map = { spring: 0, summer: 1, fall: 2 };
+      return { year: parseInt(m[2],10), termIndex: map[m[1].toLowerCase()] ?? -1 };
+    }
+
+    // Render a simple text list item (let your CSS handle visuals)
+    function renderItem(c) {
+      const left = (c.code ? esc(c.code) + ': ' : '') + esc(c.title || 'Untitled Course');
+      const metaBits = [];
+      if (c.category) metaBits.push(esc(c.category));
+      if (c.term)     metaBits.push(esc(c.term));
+      if (typeof c.credits === 'number') metaBits.push(esc(c.credits) + ' cr');
+      const meta = metaBits.length ? ' — ' + metaBits.join(' • ') : '';
+      return `<li>${left}${meta}</li>`;
+    }
+
     fetch('database.json')
-      .then(r => r.json())
+      .then(r => {
+        if (!r.ok) throw new Error('Failed to load database.json');
+        return r.json();
+      })
       .then(db => {
         const courses = Array.isArray(db.courses) ? db.courses : [];
-        const inProg = courses.filter(c => (c.status||'').toLowerCase() === 'in_progress');
-        const done   = courses.filter(c => (c.status||'').toLowerCase() === 'completed');
 
-        const fmtTerm = (c) => c.term ? c.term : '';
-        const subtitle = (c) => [c.category, fmtTerm(c), (c.credits ? `${c.credits} cr`:'')].filter(Boolean).join(' ');
+        const inProg = courses
+          .filter(c => (c.status || '').toLowerCase() === 'in_progress')
+          .sort((a,b) => esc(a.code || '').localeCompare(esc(b.code || '')));
 
-        const renderList = (arr) => `
-          <div class="course-section">
-            <ul class="course-list">
-              ${arr.map(c => `
-                <li>
-                  ${c.code ? c.code + ': ' : ''}<strong>${c.title}</strong>
-                  ${subtitle(c).split(' ').map(m => `<span class="meta">${m}</span>`).join('')}
-                </li>
-              `).join('')}
-            </ul>
-          </div>
-        `;
+        const done = courses
+          .filter(c => (c.status || '').toLowerCase() === 'completed')
+          .sort((a,b) => {
+            const ka = termKey(a.term), kb = termKey(b.term);
+            if (kb.year !== ka.year) return kb.year - ka.year;
+            return kb.termIndex - ka.termIndex;
+          });
 
-        document.getElementById('courses-in-progress').innerHTML = 
-          inProg.length ? renderList(inProg) : '<p class="muted">No current courses listed.</p>';
+        document.getElementById('courses-in-progress').innerHTML =
+          inProg.length ? inProg.map(renderItem).join('') : '<li>No current courses listed.</li>';
 
-        document.getElementById('courses-completed').innerHTML = 
-          done.length ? renderList(done) : '<p class="muted">No completed courses listed yet.</p>';
+        document.getElementById('courses-completed').innerHTML =
+          done.length ? done.map(renderItem).join('') : '<li>No completed courses listed yet.</li>';
       })
       .catch(() => {
-        document.getElementById('courses-in-progress').innerHTML = '<p class="muted">Could not load courses.</p>';
-        document.getElementById('courses-completed').innerHTML = '';
+        document.getElementById('courses-in-progress').innerHTML = '<li>Could not load courses.</li>';
+        document.getElementById('courses-completed').innerHTML   = '';
       });
   </script>
 </body>
