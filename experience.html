@@ -1,93 +1,99 @@
-<!DOCTYPE html>
+1 file changed
++80
+-69
+lines changed
+
+ 
+‎experience.html‎
++80
+-69
+Lines changed: 80 additions & 69 deletions
+Original file line number	Diff line number	Diff line change
+@@ -2,81 +2,92 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ryker Lee - Experience</title>
+  <link rel="stylesheet" href="style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Athletics — Ryker Lee</title>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+  <nav>
   <header>
     <div class="nav-wrapper">
       <div class="nav-container">
-        <nav>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="experience.html">Experience</a></li>
-            <li><a href="athletics.html">Athletics</a></li>
-            <li><a href="courses.html">Courses</a></li>
-            <li><a href="projects.html">Projects</a></li>
-          </ul>
-        </nav>
+        <a href="index.html">Home</a>
+        <a href="experience.html">Experience</a>
+        <a href="athletics.html">Athletics</a>
+        <a href="courses.html">Courses</a>
+        <a href="projects.html">Projects</a>
       </div>
     </div>
   </header>
+  </nav>
+  <section class="profile">
+    <div class="profile-intro">
+      <h1>RYKER LEE</h1>
+      <p>Cyber Operations | Network and Security Administration <br />@ Dakota State University</p>
+      <h2>Work History</h2>
+      <div class="experience-wrapper">
+        <div class="experience-entry">
+          <h3>Dynamic PC Support Technician</h3>
+          <p><span>@ Worldwide TechServices</span> • <em>Jun 2025 – Present</em><br />Sioux Falls, SD</p>
+        </div>
+        <div class="experience-entry">
+          <h3>Enrichment Programming Leader</h3>
+          <p><span>@ Governors Cyber Academy</span> • <em>Jun 2024 – Present</em><br />Madison, SD</p>
+        </div>
+        <div class="experience-entry">
+          <h3>Associate Network Engineer</h3>
+          <p><span>@ Sanford Health</span> • <em>Aug 2024 – May 2025</em><br />Sioux Falls, SD</p>
+        </div>
+        <div class="experience-entry">
+          <h3>Network Engineer Intern</h3>
+          <p><span>@ Sanford Health</span> • <em>Jun 2024 – Aug 2024</em><br />Sioux Falls, SD</p>
+        </div>
+      </div>
+  </header>
 
-  <main class="container" id="ath-root">
-    <h1>Athletics Experience</h1>
-
-    <section class="course-card">
-      <h2>Dakota State University (Frontier Conference NAIA)</h2>
-      <p><strong>Game Day Event Production Staff</strong> — Madison, SD<br/>
-      <em>Aug 2024 – Present</em></p>
-      <ul class="course-list">
-        <li>Operate scoreboard, graphics, and cameras for football, basketball, and volleyball</li>
-        <li>Coordinate with coaches, announcers, and production crew to ensure smooth execution</li>
-      </ul>
-    </section>
-
-    <section class="course-card">
-      <h2>ASM Global (NCAA D1, USHL)</h2>
-      <p><strong>AV Staff</strong> — Sioux Falls, SD<br/>
-      <em>Feb 2024 – Present</em></p>
-      <ul class="course-list">
-        <li>Production team for high-profile tournaments and college games; camera and replay operation</li>
-      </ul>
-    </section>
-
-    <section class="course-card">
-      <h2>Sioux Falls Skyforce (NBA G League)</h2>
-      <p><strong>Game Day Event Production Staff</strong> — Sioux Falls, SD<br/>
-      <em>Jan 2024 – Present</em></p>
-      <ul class="course-list">
-        <li>Operated broadcast cameras and assisted with AV transitions during live pro basketball games</li>
-      </ul>
-    </section>
-
-    <section class="course-card">
-      <h2>Augustana University Athletics (CCHA NCAA DI, NSIC NCAA DII)</h2>
-      <p><strong>Game Day Event Production Staff</strong> — Sioux Falls, SD<br/>
-      <em>Nov 2023 – Present</em></p>
-      <ul class="course-list">
-        <li>Camera/production crew for hockey, men’s and women’s basketball, volleyball, and football</li>
-      </ul>
-    </section>
-
-    <section class="course-card">
-      <h2>Sanford Pentagon (NCAA DI)</h2>
-      <p><strong>Game Day Event Production Staff</strong> — Sioux Falls, SD<br/>
-      <em>Feb 2023 – Present</em></p>
-      <ul class="course-list">
-        <li>Production team for high-profile tournaments and college games; camera and replay operation</li>
-      </ul>
-    </section>
-
-    <section class="course-card">
-      <h2>Sioux Falls Canaries (American Association of Professional Baseball)</h2>
-      <p><strong>Game Day Event Production Staff</strong> — Sioux Falls, SD<br/>
-      <em>May 2023 – Aug 2024</em></p>
-      <ul class="course-list">
-        <li>Operated broadcast cameras and assisted with AV transitions during live pro baseball games</li>
-      </ul>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <p>&copy; <span id="year"></span> Ryker Lee</p>
-  </footer>
-
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+      <h2>Certifications & Training</h2>
+      <div class="bubble-container" style="margin-top: 1rem;">
+         <span class="bubble">Global Seal of Biliteracy (Spanish)</span>
+        <span class="bubble">CCST Networking</span>
+        <span class="bubble">CCST Cybersecurity</span>
+        <span class="bubble">Dell Client Foundations</span>
+        <span class="bubble">Dell Client Advanced</span>
+        <span class="bubble">Lenovo Qualified PC Service Technician</span>
+        <span class="bubble">Hack the Box Academy</span>
+        <span class="bubble">Hacking Modern Web Apps – <i>7ASecurity</i></span>
+      </div>
+    </div>
+    <div class="profile-image">
+      <div style="text-align: center;">
+        <img src="images/profile.jpg" alt="Ryker Lee" />
+        <div class="contact-info" style="margin-top: 1rem;">
+          <hr style="border: none; border-top: 1px solid var(--border-color); margin: 1rem 0;" />
+          <div style="display: flex; justify-content: center; gap: 2rem; font-weight: bold;">
+            <a href="mailto:ryker.lee@trojans.dsu.edu" style="color: var(--text-color); text-decoration: none;">
+              <img src="https://github.com/sempostma/office365-icons/blob/master/png/2048/outlook.png?raw=true" alt="Outlook Icon" style="width: 16px; vertical-align: middle; margin-right: 0.5rem;" />
+              EMAIL →
+            </a>
+            <a href="tel:+16053761424" style="color: var(--text-color); text-decoration: none;">
+              <img src="https://github.com/opoloo/androidicons/blob/master/assets/blue_dark/hdpi/ic_action_phone.png?raw=true" alt="Phone Icon" style="width: 16px; vertical-align: middle; margin-right: 0.5rem;" />
+              PHONE →
+            </a>
+            <a href="https://www.linkedin.com/in/ryker-1ee" target="_blank" style="color: var(--text-color); text-decoration: none;">
+              <img src="https://github.com/opoloo/androidicons/blob/master/assets/blue_dark/hdpi/ic_action_linkedin.png?raw=true" alt="LinkedIn Icon" style="width: 16px; vertical-align: middle; margin-right: 0.5rem;" />
+              LINKEDIN →
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+<script src="script.js" defer></script>
 </body>
 </html>
