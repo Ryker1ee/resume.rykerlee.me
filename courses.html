@@ -3,8 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Ryker Lee - Courses</title>
+  <title>Courses — Ryker Lee</title>
   <link rel="stylesheet" href="style.css"/>
+
+  <!-- Scoped styles only for this page -->
+  <style>
+    /* everything is namespaced under #courses-page so we don't affect other pages */
+    #courses-page { max-width: 980px; margin: 0 auto; padding: 2rem 1rem; }
+    #courses-page h1 { margin: 0 0 1rem 0; }
+    #courses-page .section { margin-top: 1.75rem; }
+    #courses-page .card {
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+    }
+    #courses-page ul { margin: 0.5rem 0 0 1.25rem; padding: 0; }
+    #courses-page li { margin: 0.4rem 0; line-height: 1.45; }
+    #courses-page .title { font-weight: 600; }
+    #courses-page .meta { display: inline-flex; gap: .4rem; flex-wrap: wrap; margin-left: .35rem; }
+    #courses-page .pill {
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 999px;
+      padding: .1rem .5rem;
+      font-size: .85em;
+      opacity: .9;
+      white-space: nowrap;
+    }
+    /* small heading accent that should blend with your blue theme */
+    #courses-page .accent { color: #6ea8ff; } /* tweak if you want a different blue */
+  </style>
 </head>
 <body>
   <header>
@@ -12,23 +40,27 @@
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="experience.html">Experience</a></li>
-        <li><a href="projects.html">Projects</a></li>
         <li><a class="active" href="courses.html">Courses</a></li>
+        <li><a href="projects.html">Projects</a></li>
       </ul>
     </nav>
   </header>
 
-  <main>
+  <main id="courses-page">
     <h1>Courses</h1>
 
-    <section>
-      <h2>Currently Taking</h2>
-      <ul id="courses-in-progress"></ul>
+    <section class="section">
+      <h2 class="accent">Currently Taking</h2>
+      <div class="card">
+        <ul id="courses-in-progress"></ul>
+      </div>
     </section>
 
-    <section style="margin-top:1.5rem;">
-      <h2>Completed</h2>
-      <ul id="courses-completed"></ul>
+    <section class="section">
+      <h2 class="accent">Completed</h2>
+      <div class="card">
+        <ul id="courses-completed"></ul>
+      </div>
     </section>
   </main>
 
@@ -37,20 +69,29 @@
   </footer>
 
   <script>
+    // footer year
     document.getElementById('year').textContent = new Date().getFullYear();
 
     const esc = (s) => String(s ?? '').replace(/[&<>"']/g, m => (
       { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]
     ));
 
-    function renderCourseItem(c) {
-      const left = (c.code ? esc(c.code) + ': ' : '') + esc(c.title || 'Untitled Course');
-      const bits = [];
-      if (c.category) bits.push(esc(c.category));
-      if (c.term) bits.push(esc(c.term));
-      if (typeof c.credits === 'number') bits.push(`${esc(c.credits)} cr`);
-      const meta = bits.length ? ` — ${bits.join(' • ')}` : '';
-      return `<li>${left}${meta}</li>`;
+    // Parse "Fall 2025" -> {year:2025, termIndex:2} (Spring=0, Summer=1, Fall=2)
+    function termKey(termStr) {
+      if (!termStr) return { year: 0, termIndex: -1 };
+      const m = termStr.match(/(Spring|Summer|Fall)\s+(\d{4})/i);
+      if (!m) return { year: 0, termIndex: -1 };
+      const map = { spring: 0, summer: 1, fall: 2 };
+      return { year: parseInt(m[2],10), termIndex: map[m[1].toLowerCase()] ?? -1 };
+    }
+
+    function itemHTML(c) {
+      const title = (c.code ? esc(c.code) + ': ' : '') + `<span class="title">${esc(c.title || 'Untitled Course')}</span>`;
+      const pills = [];
+      if (c.category) pills.push(`<span class="pill">${esc(c.category)}</span>`);
+      if (c.term)     pills.push(`<span class="pill">${esc(c.term)}</span>`);
+      if (typeof c.credits === 'number') pills.push(`<span class="pill">${esc(c.credits)} cr</span>`);
+      return `<li>${title}<span class="meta">${pills.join('')}</span></li>`;
     }
 
     fetch('database.json')
@@ -61,16 +102,26 @@
       .then(db => {
         const courses = Array.isArray(db.courses) ? db.courses : [];
 
-        const inProg = courses.filter(c => (c.status || '').toLowerCase() === 'in_progress');
-        const done = courses.filter(c => (c.status || '').toLowerCase() === 'completed');
+        const inProg = courses
+          .filter(c => (c.status || '').toLowerCase() === 'in_progress')
+          .sort((a,b) => esc(a.code).localeCompare(esc(b.code)));
+
+        const done = courses
+          .filter(c => (c.status || '').toLowerCase() === 'completed')
+          .sort((a,b) => {
+            const ka = termKey(a.term), kb = termKey(b.term);
+            if (kb.year !== ka.year) return kb.year - ka.year;      // newer year first
+            return kb.termIndex - ka.termIndex;                      // Fall > Summer > Spring
+          });
 
         document.getElementById('courses-in-progress').innerHTML =
-          inProg.length ? inProg.map(renderCourseItem).join('') : '<li>No current courses listed.</li>';
+          inProg.length ? inProg.map(itemHTML).join('') : '<li>No current courses listed.</li>';
 
         document.getElementById('courses-completed').innerHTML =
-          done.length ? done.map(renderCourseItem).join('') : '<li>No completed courses listed yet.</li>';
+          done.length ? done.map(itemHTML).join('') : '<li>No completed courses listed yet.</li>';
       })
-      .catch(() => {
+      .catch(err => {
+        console.error(err);
         document.getElementById('courses-in-progress').innerHTML = '<li>Could not load courses.</li>';
         document.getElementById('courses-completed').innerHTML   = '';
       });
