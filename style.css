@@ -550,18 +550,10 @@ table.work-history th {
   text-decoration: underline; /* or none; match your theme */
 }
 
-/* === Courses page layout & styling (the look you liked) === */
-.courses-page .container { max-width: 980px; margin: 0 auto; padding: 2rem 1rem; }
 
-.courses-page h1 { margin: 0 0 1.25rem 0; }
-.courses-page h2 { margin: 1.75rem 0 0.75rem; }
-
-  
 .courses-container { max-width: 1100px; }
-.course-card {
-  background: #111;                 /* neutral dark card */
-  border: 1px solid #232323;        /* subtle border */
-  background: #171a1c;
+  .course-card {
+     background: #171a1c;
   border: 1px solid #262a2d;
   border-radius: 12px;
   padding: 1rem 1.25rem;
@@ -569,16 +561,10 @@ table.work-history th {
 }
 
 .course-list { margin: 0; padding-left: 1.25rem; }
-.course-list li { margin: 0.5rem 0; line-height: 1.45; }
 .course-list li { margin: .5rem 0; line-height: 1.5; }
-
 .course-title { font-weight: 600; }
-
-.meta { display: inline-flex; gap: .35rem; flex-wrap: wrap; margin-left: .35rem; }
 .meta { display: inline-flex; gap: .4rem; flex-wrap: wrap; margin-left: .4rem; vertical-align: middle; }
 .pill {
-  border: 1px solid rgba(255,255,255,0.15);
-  background: #1d1d1d;
   border: 1px solid rgba(255,255,255,.15);
   background: #1f2326;
   color: #d9d9d9;
