@@ -20,123 +20,114 @@
   </nav>
 
   <!-- MAIN COURSES CONTENT -->
-  <main class="container">
+  <main class="container" id="courses-root">
     <h1>Courses</h1>
-
-    <section aria-labelledby="inprog-heading">
-      <h2 id="inprog-heading">Currently Taking</h2>
-      <div class="course-card">
-        <ul id="courses-in-progress" class="course-list"></ul>
-      </div>
-    </section>
-
-    <section aria-labelledby="completed-heading">
-      <h2 id="completed-heading">Completed</h2>
-      <div class="course-card">
-        <ul id="courses-completed" class="course-list"></ul>
-      </div>
-    </section>
+    <!-- The script will render grouped sections here -->
   </main>
 
-<script>
-fetch('database.json')
-  .then(res => res.json())
-  .then(data => {
-    const container = document.querySelector('.container');
+  <script>
+    // --- helpers ---
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, m => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    }[m]));
 
-    function makeSection(title, courses) {
+    // Spring=0, Summer=1, Fall=2; higher year/term means newer
+    function termKey(termStr){
+      const m = (termStr || '').match(/(Spring|Summer|Fall)\s+(\d{4})/i);
+      if (!m) return { year: 0, termIndex: -1 };
+      const map = { spring:0, summer:1, fall:2 };
+      return { year: parseInt(m[2],10), termIndex: map[m[1].toLowerCase()] ?? -1 };
+    }
+
+    // Extract numeric, e.g. "CSC 420" -> 420
+    function codeNum(code){
+      const m = String(code || '').match(/(\d{2,4})/);
+      return m ? parseInt(m[1], 10) : 0;
+    }
+
+    function liHTML(c){
+      const left = (c.code ? esc(c.code) + ': ' : '') +
+                   `<span class="course-title">${esc(c.title || 'Untitled Course')}</span>`;
+      const pills = [];
+      if (c.category) pills.push(`<span class="pill">${esc(c.category)}</span>`);
+      if (c.term)     pills.push(`<span class="pill">${esc(c.term)}</span>`);
+      if (typeof c.credits === 'number') pills.push(`<span class="pill">${esc(c.credits)} cr</span>`);
+      return `<li>${left} <span class="meta">${pills.join(' ')}</span></li>`;
+    }
+
+    function renderCard(parent, title, items){
+      if (!items.length) return;
       const card = document.createElement('div');
       card.className = 'course-card';
-
       const h3 = document.createElement('h3');
       h3.textContent = title;
       card.appendChild(h3);
-
       const ul = document.createElement('ul');
       ul.className = 'course-list';
-
-      courses.forEach(c => {
-        const li = document.createElement('li');
-
-        const titleSpan = document.createElement('span');
-        titleSpan.className = 'course-title';
-        titleSpan.textContent = `${c.code}: ${c.title}`;
-        li.appendChild(titleSpan);
-
-        const meta = document.createElement('span');
-        meta.className = 'meta';
-
-        const cat = document.createElement('span');
-        cat.className = 'pill';
-        cat.textContent = c.category;
-        meta.appendChild(cat);
-
-        const term = document.createElement('span');
-        term.className = 'pill';
-        term.textContent = c.term;
-        meta.appendChild(term);
-
-        const credits = document.createElement('span');
-        credits.className = 'pill';
-        credits.textContent = `${c.credits} cr`;
-        meta.appendChild(credits);
-
-        li.appendChild(meta);
-        ul.appendChild(li);
-      });
-
+      ul.innerHTML = items.map(liHTML).join('');
       card.appendChild(ul);
-      container.appendChild(card);
+      parent.appendChild(card);
     }
 
-    // split by prefix
-    const cscCourses = data.courses.filter(c => c.code.startsWith("CSC"));
-    const otherCourses = data.courses.filter(c => !c.code.startsWith("CSC"));
+    function renderBucket(root, bucketTitle, bucket){
+      const sec = document.createElement('section');
+      const h2 = document.createElement('h2');
+      h2.textContent = bucketTitle;
+      sec.appendChild(h2);
 
-    // split into in-progress vs completed
-    const inProgressCSC = cscCourses.filter(c => c.status === "In Progress");
-    const completedCSC = cscCourses.filter(c => c.status === "Completed");
-    const inProgressOther = otherCourses.filter(c => c.status === "In Progress");
-    const completedOther = otherCourses.filter(c => c.status === "Completed");
+      renderCard(sec, 'Currently Taking', bucket.in_progress);
+      renderCard(sec, 'Completed', bucket.completed);
 
-    // build the page
-    const h2 = document.createElement('h2');
-    h2.textContent = 'Courses';
-    container.appendChild(h2);
+      root.appendChild(sec);
+    }
 
-    if (inProgressCSC.length) makeSection('CSC (Currently Taking)', inProgressCSC);
-    if (inProgressOther.length) makeSection('Other (Currently Taking)', inProgressOther);
+    // --- main ---
+    fetch('database.json')
+      .then(r => {
+        if (!r.ok) throw new Error('Failed to load database.json');
+        return r.json();
+      })
+      .then(db => {
+        const root = document.getElementById('courses-root');
+        const courses = Array.isArray(db.courses) ? db.courses : [];
 
-    if (completedCSC.length) makeSection('CSC (Completed)', completedCSC);
-    if (completedOther.length) makeSection('Other (Completed)', completedOther);
-  })
-  .catch(err => {
-    console.error(err);
-    document.querySelector('.container').textContent = 'Error loading courses.';
-  });
-</script>
+        // Buckets by prefix + status
+        const buckets = {
+          CSC:   { in_progress: [], completed: [] },
+          Other: { in_progress: [], completed: [] }
+        };
 
-<div class="profile-image">
-      <div style="text-align: center;">
-        <img src="images/profile.jpg" alt="Ryker Lee" />
-        <div class="contact-info" style="margin-top: 1rem;">
-          <hr style="border: none; border-top: 1px solid var(--border-color); margin: 1rem 0;" />
-          <div style="display: flex; justify-content: center; gap: 2rem; font-weight: bold;">
-            <a href="mailto:ryker.lee@trojans.dsu.edu" style="color: var(--text-color); text-decoration: none;">
-              <img src="https://github.com/sempostma/office365-icons/blob/master/png/2048/outlook.png?raw=true" alt="Outlook Icon" style="width: 16px; vertical-align: middle; margin-right: 0.5rem;" />
-              EMAIL →
-            </a>
-            <a href="tel:+16053761424" style="color: var(--text-color); text-decoration: none;">
-              <img src="https://github.com/opoloo/androidicons/blob/master/assets/blue_dark/hdpi/ic_action_phone.png?raw=true" alt="Phone Icon" style="width: 16px; vertical-align: middle; margin-right: 0.5rem;" />
-              PHONE →
-            </a>
-            <a href="https://www.linkedin.com/in/ryker-1ee" target="_blank" style="color: var(--text-color); text-decoration: none;">
-              <img src="https://github.com/opoloo/androidicons/blob/master/assets/blue_dark/hdpi/ic_action_linkedin.png?raw=true" alt="LinkedIn Icon" style="width: 16px; vertical-align: middle; margin-right: 0.5rem;" />
-              LINKEDIN →
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
+        for (const c of courses){
+          const isCSC   = /^CSC\b/i.test(c.code || '');
+          const status  = String(c.status || '').toLowerCase(); // 'in_progress' or 'completed'
+          const dest    = isCSC ? buckets.CSC : buckets.Other;
+          if (status === 'in_progress') dest.in_progress.push(c);
+          else if (status === 'completed') dest.completed.push(c);
+        }
+
+        // Sort: CSC by numeric code; Other by newest term then code
+        const byCSCNum = (a,b) => codeNum(a.code) - codeNum(b.code);
+        const byTermThenCode = (a,b) => {
+          const ka = termKey(a.term), kb = termKey(b.term);
+          if (kb.year !== ka.year) return kb.year - ka.year;
+          if (kb.termIndex !== ka.termIndex) return kb.termIndex - ka.termIndex;
+          return String(a.code||'').localeCompare(String(b.code||''));
+        };
+
+        buckets.CSC.in_progress.sort(byCSCNum);
+        buckets.CSC.completed.sort(byCSCNum);
+        buckets.Other.in_progress.sort(byTermThenCode);
+        buckets.Other.completed.sort(byTermThenCode);
+
+        // Render two grouped sections
+        renderBucket(root, 'CSC', buckets.CSC);
+        renderBucket(root, 'Other', buckets.Other);
+      })
+      .catch(err => {
+        console.error(err);
+        const root = document.getElementById('courses-root');
+        root.innerHTML += '<p>Could not load courses.</p>';
+      });
+  </script>
 </body>
 </html>
