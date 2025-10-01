@@ -8,7 +8,6 @@
 </head>
 <body>
 
-  <!-- NAV (same as the rest of the site) -->
   <nav>
     <div class="nav-wrapper">
       <div class="nav-container">
@@ -20,14 +19,10 @@
     </div>
   </nav>
 
-  <!-- PROFILE (identical layout: intro left, photo/links right) -->
   <section class="profile">
     <div class="profile-intro">
       <h1>RYKER LEE</h1>
-      <p>
-        Cyber Operations | Network and Security Administration<br />
-        @ Dakota State University
-      </p>
+      <p>Cyber Operations | Network and Security Administration<br />@ Dakota State University</p>
     </div>
 
     <div class="profile-image">
@@ -51,20 +46,19 @@
       </div>
     </div>
   </section>
-
-  <!-- PAGE CONTENT (uses your container/content spacing) -->
-  <main id="courses-main" class="container">
+  
+  <main class="container courses-container">
     <h1>Courses</h1>
 
-    <section aria-labelledby="inprog-heading">
-      <h2 id="inprog-heading">Currently Taking</h2>
+    <section>
+      <h2>Currently Taking</h2>
       <div class="course-card">
         <ul id="courses-in-progress" class="course-list"></ul>
       </div>
     </section>
 
-    <section aria-labelledby="completed-heading">
-      <h2 id="completed-heading">Completed</h2>
+    <section>
+      <h2>Completed</h2>
       <div class="course-card">
         <ul id="courses-completed" class="course-list"></ul>
       </div>
@@ -76,15 +70,12 @@
   </footer>
 
   <script>
-    // Footer year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Escape helper
     const esc = s => String(s ?? '').replace(/[&<>"']/g, m => ({
       '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
     }[m]));
 
-    // Sort helper (Spring=0, Summer=1, Fall=2)
     function termKey(termStr){
       const m = (termStr || '').match(/(Spring|Summer|Fall)\s+(\d{4})/i);
       if (!m) return { year:0, termIndex:-1 };
@@ -92,18 +83,15 @@
       return { year:parseInt(m[2],10), termIndex:map[m[1].toLowerCase()] ?? -1 };
     }
 
-    // One course list item (classes your CSS styles: .course-title, .pill, .meta)
     function renderItem(c){
-      const left = (c.code ? esc(c.code)+': ' : '') +
-                   `<span class="course-title">${esc(c.title || 'Untitled Course')}</span>`;
-      const bits = [];
-      if (c.category) bits.push(`<span class="pill">${esc(c.category)}</span>`);
-      if (c.term)     bits.push(`<span class="pill">${esc(c.term)}</span>`);
-      if (typeof c.credits === 'number') bits.push(`<span class="pill">${esc(c.credits)} cr</span>`);
-      return `<li>${left} <span class="meta">${bits.join(' ')}</span></li>`;
+      const title = (c.code ? esc(c.code)+': ' : '') + `<span class="course-title">${esc(c.title || 'Untitled Course')}</span>`;
+      const pills = [];
+      if (c.category) pills.push(`<span class="pill">${esc(c.category)}</span>`);
+      if (c.term)     pills.push(`<span class="pill">${esc(c.term)}</span>`);
+      if (typeof c.credits === 'number') pills.push(`<span class="pill">${esc(c.credits)} cr</span>`);
+      return `<li>${title} <span class="meta">${pills.join(' ')}</span></li>`;
     }
 
-    // Load and render from database.json
     fetch('database.json')
       .then(r => r.json())
       .then(db => {
