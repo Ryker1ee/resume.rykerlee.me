@@ -7,20 +7,52 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
+  <!-- NAV -->
   <nav>
     <div class="nav-wrapper">
       <div class="nav-container">
         <a href="index.html">Home</a>
         <a href="experience.html">Experience</a>
-        <a href="courses.html">Courses</a>
+        <a href="courses.html" class="active">Courses</a>
         <a href="projects.html">Projects</a>
       </div>
     </div>
   </nav>
+
+  <!-- PROFILE HEADER (same structure as your other pages) -->
   <section class="profile">
     <div class="profile-intro">
       <h1>RYKER LEE</h1>
-      <p>Cyber Operations | Network and Security Administration <br />@ Dakota State University</p>
+      <p>
+        Cyber Operations | Network and Security Administration<br />
+        @ Dakota State University
+      </p>
+    </div>
+
+    <div class="profile-image">
+      <img src="images/profile.jpg" alt="Ryker Lee" />
+      <div class="contact-info">
+        <hr />
+        <div class="contact-links">
+          <a href="mailto:ryker.lee@trojans.dsu.edu">
+            <img src="https://github.com/sempostma/office365-icons/blob/master/png/2048/outlook.png?raw=true" alt="" />
+            EMAIL →
+          </a>
+          <a href="tel:+16053761424">
+            <img src="https://github.com/opoloo/androidicons/blob/master/assets/blue_dark/hdpi/ic_action_phone.png?raw=true" alt="" />
+            PHONE →
+          </a>
+          <a href="https://www.linkedin.com/in/ryker-1ee" target="_blank" rel="noopener">
+            <img src="https://github.com/opoloo/androidicons/blob/master/assets/blue_dark/hdpi/ic_action_linkedin.png?raw=true" alt="" />
+            LINKEDIN →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE CONTENT -->
   <main id="courses-main" class="container">
     <h1>Courses</h1>
 
@@ -44,12 +76,15 @@
   </footer>
 
   <script>
+    // Footer year
     document.getElementById('year').textContent = new Date().getFullYear();
 
+    // Escape helper
     const esc = s => String(s ?? '').replace(/[&<>"']/g, m => ({
       '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
     }[m]));
 
+    // Term sorter (Spring=0, Summer=1, Fall=2)
     function termKey(termStr){
       const m = (termStr || '').match(/(Spring|Summer|Fall)\s+(\d{4})/i);
       if (!m) return { year:0, termIndex:-1 };
@@ -57,8 +92,10 @@
       return { year:parseInt(m[2],10), termIndex:map[m[1].toLowerCase()] ?? -1 };
     }
 
+    // One course list item (classes match your CSS: .course-title, .pill, .meta)
     function renderItem(c){
-      const left = (c.code ? esc(c.code)+': ' : '') + `<span class="course-title">${esc(c.title || 'Untitled Course')}</span>`;
+      const left = (c.code ? esc(c.code)+': ' : '') +
+                   `<span class="course-title">${esc(c.title || 'Untitled Course')}</span>`;
       const bits = [];
       if (c.category) bits.push(`<span class="pill">${esc(c.category)}</span>`);
       if (c.term)     bits.push(`<span class="pill">${esc(c.term)}</span>`);
@@ -66,6 +103,7 @@
       return `<li>${left} <span class="meta">${bits.join(' ')}</span></li>`;
     }
 
+    // Load and render from database.json
     fetch('database.json')
       .then(r => r.json())
       .then(db => {
@@ -92,26 +130,5 @@
         document.getElementById('courses-completed').innerHTML   = '';
       });
   </script>
-      <div class="profile-image">
-      <div style="text-align: center;">
-        <img src="images/profile.jpg" alt="Ryker Lee" />
-        <div class="contact-info" style="margin-top: 1rem;">
-          <hr style="border: none; border-top: 1px solid var(--border-color); margin: 1rem 0;" />
-          <div style="display: flex; justify-content: center; gap: 2rem; font-weight: bold;">
-            <a href="mailto:ryker.lee@trojans.dsu.edu" style="color: var(--text-color); text-decoration: none;">
-              <img src="https://github.com/sempostma/office365-icons/blob/master/png/2048/outlook.png?raw=true" alt="Outlook Icon" style="width: 16px; vertical-align: middle; margin-right: 0.5rem;" />
-              EMAIL →
-            </a>
-            <a href="tel:+16053761424" style="color: var(--text-color); text-decoration: none;">
-              <img src="https://github.com/opoloo/androidicons/blob/master/assets/blue_dark/hdpi/ic_action_phone.png?raw=true" alt="Phone Icon" style="width: 16px; vertical-align: middle; margin-right: 0.5rem;" />
-              PHONE →
-            </a>
-            <a href="https://www.linkedin.com/in/ryker-1ee" target="_blank" style="color: var(--text-color); text-decoration: none;">
-              <img src="https://github.com/opoloo/androidicons/blob/master/assets/blue_dark/hdpi/ic_action_linkedin.png?raw=true" alt="LinkedIn Icon" style="width: 16px; vertical-align: middle; margin-right: 0.5rem;" />
-              LINKEDIN →
-            </a>
-          </div>
-        </div>
-      </div>
 </body>
 </html>
