@@ -2,74 +2,102 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Courses – Ryker Lee</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Ryker Lee - Courses</title>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <nav>
-    <div class="nav-wrapper">
-      <div class="nav-container">
-        <a href="index.html">Home</a>
-        <a href="experience.html">Experience</a>
-        <a href="courses.html">Courses</a>
-        <a href="projects.html">Projects</a>
-      </div>
-    </div>
-  </nav>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a class="active" href="courses.html">Courses</a></li>
+        <li><a href="projects.html">Projects</a></li>
+      </ul>
+    </nav>
+  </header>
 
-  <main class="container">
+  <main>
     <h1>Courses</h1>
 
-    <section>
-      <h2>Currently Taking</h2>
-      <div id="courses-in-progress" class="cards grid"></div>
+    <section aria-labelledby="inprog-heading">
+      <h2 id="inprog-heading">Currently Taking</h2>
+      <ul id="courses-in-progress">
+        <!-- populated by JS -->
+      </ul>
     </section>
 
-    <section style="margin-top:2rem;">
-      <h2>Completed</h2>
-      <div id="courses-completed" class="cards grid"></div>
+    <section aria-labelledby="completed-heading" style="margin-top:1.5rem;">
+      <h2 id="completed-heading">Completed</h2>
+      <ul id="courses-completed">
+        <!-- populated by JS -->
+      </ul>
     </section>
   </main>
 
-  <footer class="site-footer">
+  <footer>
     <p>&copy; <span id="year"></span> Ryker Lee</p>
   </footer>
 
-  <script src="script.js"></script>
   <script>
-    // Minimal bootstrapping so we reuse script.js helpers
+    // Footer year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Fetch courses from database.json and render them
+    // Helper: safe text
+    const esc = (s) => String(s ?? '').replace(/[&<>"']/g, m => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    }[m]));
+
+    // Render a single <li> for a course (no grades)
+    function renderCourseItem(c) {
+      const left = (c.code ? esc(c.code) + ': ' : '') + esc(c.title || 'Untitled Course');
+
+      // Optional small metadata trail (category, term, credits)
+      const metaBits = [];
+      if (c.category) metaBits.push(esc(c.category));
+      if (c.term) metaBits.push(esc(c.term));
+      if (typeof c.credits === 'number') metaBits.push(`${esc(c.credits)} cr`);
+      const meta = metaBits.length ? ` — ${metaBits.join(' • ')}` : '';
+
+      // Optional link and image support (if present in database.json)
+      const linkedTitle = c.link
+        ? `<a href="${esc(c.link)}" target="_blank" rel="noopener">${left}</a>`
+        : left;
+
+      const img = c.image
+        ? `<br><img src="${esc(c.image)}" alt="${esc(c.title || 'Course image')}" style="max-width:160px;height:auto;">`
+        : '';
+
+      return `<li>${linkedTitle}${meta}${img}</li>`;
+    }
+
+    // Fetch and render
     fetch('database.json')
-      .then(r => r.json())
+      .then(r => {
+        if (!r.ok) throw new Error('Failed to load database.json');
+        return r.json();
+      })
       .then(db => {
         const courses = Array.isArray(db.courses) ? db.courses : [];
-        const inProg = courses.filter(c => (c.status || '').toLowerCase() === 'in progress');
+
+        const inProg = courses.filter(c => (c.status || '').toLowerCase() === 'in_progress');
         const done   = courses.filter(c => (c.status || '').toLowerCase() === 'completed');
 
-        const card = (c) => {
-          const when = [c.term, c.year].filter(Boolean).join(' ');
-          const where = [c.school, c.department].filter(Boolean).join(' • ');
-          const note  = c.note ? `<p class="muted">${c.note}</p>` : '';
-          return `
-            <article class="card">
-              <div class="card-body">
-                <h3 class="card-title">${c.code ? c.code + ': ' : ''}${c.title || 'Untitled Course'}</h3>
-                <p class="card-subtitle">${when}${where ? ' • ' + where : ''}</p>
-                ${c.topics && c.topics.length ? `<ul class="pill-list">${c.topics.map(t=>`<li>${t}</li>`).join('')}</ul>` : ''}
-                ${note}
-              </div>
-            </article>
-          `;
-        };
+        const inProgHTML = inProg.length
+          ? inProg.map(renderCourseItem).join('')
+          : '<li>No current courses listed.</li>';
 
-        document.getElementById('courses-in-progress').innerHTML = inProg.map(card).join('') || '<p class="muted">No current courses listed.</p>';
-        document.getElementById('courses-completed').innerHTML   = done.map(card).join('')   || '<p class="muted">No completed courses listed yet.</p>';
+        const doneHTML = done.length
+          ? done.map(renderCourseItem).join('')
+          : '<li>No completed courses listed yet.</li>';
+
+        document.getElementById('courses-in-progress').innerHTML = inProgHTML;
+        document.getElementById('courses-completed').innerHTML   = doneHTML;
       })
-      .catch(() => {
-        document.getElementById('courses-in-progress').innerHTML = '<p class="muted">Could not load courses.</p>';
+      .catch(err => {
+        console.error(err);
+        document.getElementById('courses-in-progress').innerHTML = '<li>Could not load courses.</li>';
         document.getElementById('courses-completed').innerHTML   = '';
       });
   </script>
