@@ -38,56 +38,82 @@
     </section>
   </main>
 
-  <!-- SCRIPT TO RENDER FROM database.json -->
-  <script>
-    const esc = s => String(s ?? '').replace(/[&<>"']/g, m => ({
-      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-    }[m]));
+<script>
+fetch('database.json')
+  .then(res => res.json())
+  .then(data => {
+    const container = document.querySelector('.container');
 
-    function termKey(termStr){
-      const m = (termStr || '').match(/(Spring|Summer|Fall)\s+(\d{4})/i);
-      if (!m) return { year:0, termIndex:-1 };
-      const map = { spring:0, summer:1, fall:2 };
-      return { year:parseInt(m[2],10), termIndex:map[m[1].toLowerCase()] ?? -1 };
-    }
+    function makeSection(title, courses) {
+      const card = document.createElement('div');
+      card.className = 'course-card';
 
-    function renderItem(c){
-      const title = (c.code ? esc(c.code)+': ' : '') +
-                    `<span class="course-title">${esc(c.title || 'Untitled Course')}</span>`;
-      const pills = [];
-      if (c.category) pills.push(`<span class="pill">${esc(c.category)}</span>`);
-      if (c.term)     pills.push(`<span class="pill">${esc(c.term)}</span>`);
-      if (typeof c.credits === 'number') pills.push(`<span class="pill">${esc(c.credits)} cr</span>`);
-      return `<li>${title} <span class="meta">${pills.join(' ')}</span></li>`;
-    }
+      const h3 = document.createElement('h3');
+      h3.textContent = title;
+      card.appendChild(h3);
 
-    fetch('database.json')
-      .then(r => r.json())
-      .then(db => {
-        const courses = Array.isArray(db.courses) ? db.courses : [];
+      const ul = document.createElement('ul');
+      ul.className = 'course-list';
 
-        const inProg = courses
-          .filter(c => (c.status || '').toLowerCase() === 'in_progress')
-          .sort((a,b)=>esc(a.code||'').localeCompare(esc(b.code||'')));
+      courses.forEach(c => {
+        const li = document.createElement('li');
 
-        const done = courses
-          .filter(c => (c.status || '').toLowerCase() === 'completed')
-          .sort((a,b)=>{ 
-            const ka=termKey(a.term), kb=termKey(b.term);
-            if (kb.year !== ka.year) return kb.year - ka.year;
-            return kb.termIndex - ka.termIndex;
-          });
+        const titleSpan = document.createElement('span');
+        titleSpan.className = 'course-title';
+        titleSpan.textContent = `${c.code}: ${c.title}`;
+        li.appendChild(titleSpan);
 
-        document.getElementById('courses-in-progress').innerHTML =
-          inProg.length ? inProg.map(renderItem).join('') : '<li>No current courses listed.</li>';
+        const meta = document.createElement('span');
+        meta.className = 'meta';
 
-        document.getElementById('courses-completed').innerHTML =
-          done.length ? done.map(renderItem).join('') : '<li>No completed courses listed yet.</li>';
-      })
-      .catch(() => {
-        document.getElementById('courses-in-progress').innerHTML = '<li>Could not load courses.</li>';
-        document.getElementById('courses-completed').innerHTML   = '';
+        const cat = document.createElement('span');
+        cat.className = 'pill';
+        cat.textContent = c.category;
+        meta.appendChild(cat);
+
+        const term = document.createElement('span');
+        term.className = 'pill';
+        term.textContent = c.term;
+        meta.appendChild(term);
+
+        const credits = document.createElement('span');
+        credits.className = 'pill';
+        credits.textContent = `${c.credits} cr`;
+        meta.appendChild(credits);
+
+        li.appendChild(meta);
+        ul.appendChild(li);
       });
-  </script>
+
+      card.appendChild(ul);
+      container.appendChild(card);
+    }
+
+    // split by prefix
+    const cscCourses = data.courses.filter(c => c.code.startsWith("CSC"));
+    const otherCourses = data.courses.filter(c => !c.code.startsWith("CSC"));
+
+    // split into in-progress vs completed
+    const inProgressCSC = cscCourses.filter(c => c.status === "In Progress");
+    const completedCSC = cscCourses.filter(c => c.status === "Completed");
+    const inProgressOther = otherCourses.filter(c => c.status === "In Progress");
+    const completedOther = otherCourses.filter(c => c.status === "Completed");
+
+    // build the page
+    const h2 = document.createElement('h2');
+    h2.textContent = 'Courses';
+    container.appendChild(h2);
+
+    if (inProgressCSC.length) makeSection('CSC (Currently Taking)', inProgressCSC);
+    if (inProgressOther.length) makeSection('Other (Currently Taking)', inProgressOther);
+
+    if (completedCSC.length) makeSection('CSC (Completed)', completedCSC);
+    if (completedOther.length) makeSection('Other (Completed)', completedOther);
+  })
+  .catch(err => {
+    console.error(err);
+    document.querySelector('.container').textContent = 'Error loading courses.';
+  });
+</script>
 </body>
 </html>
