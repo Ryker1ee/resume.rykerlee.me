@@ -187,6 +187,8 @@ section{padding:74px 0;border-top:1px solid var(--line-soft)}
 .proj .tags .t{font-family:var(--font-mono);font-size:.7rem;color:var(--text);background:var(--ink-2);border:1px solid var(--line);border-radius:6px;padding:4px 8px}
 .proj a.src{font-family:var(--font-mono);font-size:.78rem;color:var(--amber);align-self:flex-start}
 .proj a.src:hover{text-decoration:underline}
+.proj.featured{grid-column:1/-1;border-color:var(--amber-line);background:linear-gradient(180deg,var(--panel),var(--ink-2))}
+.dev-badge{display:inline-flex;align-items:center;gap:9px;font-family:var(--font-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:11px}
 
 /* ---------- coursework ---------- */
 .course-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:22px}
@@ -240,6 +242,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--amber);outline-offs
   *{animation:none!important;scroll-behavior:auto!important}
   .reveal{opacity:1;transform:none;transition:none}
   .ticker-track{flex-wrap:wrap;width:auto;justify-content:center}
+  .ticker-track [aria-hidden="true"]{display:none}
   .ticker::before,.ticker::after{display:none}
 }
 </style>
@@ -336,7 +339,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--amber);outline-offs
     <div class="cap-grid">
       <div class="cap reveal"><h3>Networking</h3><div class="chips"><span class="chip">Cisco IOS</span><span class="chip">Routing &amp; Switching</span><span class="chip">OSI Model</span><span class="chip">TCP/IP</span><span class="chip">Wireshark</span><span class="chip">Ekahau Pro</span></div></div>
       <div class="cap reveal"><h3>Security</h3><div class="chips"><span class="chip">Penetration Testing</span><span class="chip">Threat Hunting</span><span class="chip">Reverse Engineering</span><span class="chip">Hack The Box</span><span class="chip">CTF</span></div></div>
-      <div class="cap reveal"><h3>Systems &amp; Tooling</h3><div class="chips"><span class="chip">Windows</span><span class="chip">Linux (Kali, EndeavourOS)</span><span class="chip">macOS</span><span class="chip">PowerShell</span><span class="chip">ServiceNow</span><span class="chip">Plex</span></div></div>
+      <div class="cap reveal"><h3>Systems &amp; Tooling</h3><div class="chips"><span class="chip">Windows</span><span class="chip">Linux (Kali, EndeavourOS)</span><span class="chip">macOS</span><span class="chip">PowerShell</span><span class="chip">ServiceNow</span></div></div>
       <div class="cap reveal"><h3>Languages</h3><div class="chips"><span class="chip">Python</span><span class="chip">C / Assembly</span><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span></div></div>
       <div class="cap reveal"><h3>Broadcast &amp; AV</h3><div class="chips"><span class="chip">Camera</span><span class="chip">Instant Replay</span><span class="chip">Directing</span><span class="chip">Video Board</span><span class="chip">Scorebug / Graphics</span><span class="chip">AV Load-in</span></div></div>
     </div>
@@ -353,16 +356,49 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--amber);outline-offs
 <section id="experience">
   <div class="wrap">
     <div class="channel reveal"><span class="num">CH.03</span> / EXPERIENCE<span class="bar"></span></div>
-    <h2 class="h2 reveal">Where I have worked</h2>
+    <h2 class="h2 reveal">Experience</h2>
     <div class="tl" style="margin-top:22px">
       <div class="tl-item reveal">
-        <div class="tl-when">Jun 2025 &ndash; Present<span class="loc">Sioux Falls, SD</span></div>
+        <div class="tl-when">Spring 2026<span class="loc">Burgos, Spain</span></div>
+        <div>
+          <h3 class="tl-role">Study Abroad &middot; Universidad de Burgos</h3>
+          <div class="tl-org">Dakota State University &middot; Spanish Minor</div>
+          <ul>
+            <li>Completed a semester of university coursework conducted entirely in Spanish.</li>
+            <li>Lived and studied in Spain, deepening Spanish fluency through full cultural immersion.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-when">Jun 2025 &ndash; Jan 2026<span class="loc">Sioux Falls, SD</span></div>
         <div>
           <h3 class="tl-role">Dynamic PC Support Technician</h3>
           <div class="tl-org">Worldwide TechServices</div>
           <ul>
             <li>Onsite hardware and software troubleshooting and warranty repairs for Dell and Lenovo clients.</li>
             <li>Completed Dell DSP certifications: Customer Expectations, Corrective Maintenance, and Security / Privacy Foundations.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-when">Aug 2024 &ndash; Present<span class="loc">Madison, SD</span></div>
+        <div>
+          <h3 class="tl-role">Game Day Event Production Staff</h3>
+          <div class="tl-org">DSU Athletics Department</div>
+          <ul>
+            <li>Operate cameras, instant replay, scorebug, graphics, and the in-house video board for live home broadcasts.</li>
+            <li>Coordinate with coaches, announcers, and the production crew across football, soccer, volleyball, and basketball.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-when">Jan 2025 &ndash; Present<span class="loc">Madison, SD</span></div>
+        <div>
+          <h3 class="tl-role">Student Senator &middot; Beacom College Representative</h3>
+          <div class="tl-org">DSU Student Association Senate</div>
+          <ul>
+            <li>Represent the Beacom College of Computer &amp; Cyber Sciences in student government.</li>
+            <li>Advocate for student priorities across academics, technology, and campus resources.</li>
           </ul>
         </div>
       </div>
@@ -426,6 +462,12 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--amber);outline-offs
     <div class="channel reveal"><span class="num">CH.05</span> / PROJECTS<span class="bar"></span></div>
     <h2 class="h2 reveal">Things I have built</h2>
     <div class="proj-grid" style="margin-top:22px">
+      <div class="proj featured reveal">
+        <div class="dev-badge"><span class="dot pulse"></span>Actively developing</div>
+        <h3>Proj. BlastOff</h3>
+        <p>Revolutionizing the university student experience from the ground up; for students, by students. Project details to be revealed soon!</p>
+        <div class="tags"><span class="t">Node.js</span><span class="t">Next.js</span><span class="t">React</span><span class="t">React Native / Expo</span><span class="t">Python</span><span class="t">C++</span><span class="t">Rust</span><span class="t">TypeScript</span><span class="t">Sanity</span><span class="t">Git</span></div>
+      </div>
       <div class="proj reveal">
         <div class="idx">PRJ_01</div>
         <h3>Portfolio Site</h3>
@@ -435,18 +477,12 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--amber);outline-offs
       </div>
       <div class="proj reveal">
         <div class="idx">PRJ_02</div>
-        <h3>Plex Media Server Automation</h3>
-        <p>A self-hosted Windows Plex server backed by a PowerShell stack: download staging, library organization and deduplication, RSS acquisition rules, and metadata parsing across a multi-drive library.</p>
-        <div class="tags"><span class="t">PowerShell</span><span class="t">Windows</span><span class="t">Plex</span><span class="t">Automation</span></div>
-      </div>
-      <div class="proj reveal">
-        <div class="idx">PRJ_03</div>
         <h3>Wi-Fi Dead Zone Remediation</h3>
         <p>Independently scoped and resolved wireless coverage gaps at a regional care facility: an Ekahau Pro site survey to map dead zones, a contractor quote, and coordinated access point installation.</p>
         <div class="tags"><span class="t">Ekahau Pro</span><span class="t">Wireless / RF</span><span class="t">Cisco</span><span class="t">Site Survey</span></div>
       </div>
       <div class="proj reveal">
-        <div class="idx">PRJ_04</div>
+        <div class="idx">PRJ_03</div>
         <h3>Cybersecurity Competitions</h3>
         <p>Team lead for NCAE Cyber Games and the Cyber Sports LTD CTF, and an active MetaCTF and Hack The Box competitor across web exploitation, networking, and forensics.</p>
         <div class="tags"><span class="t">Penetration Testing</span><span class="t">Wireshark</span><span class="t">Kali Linux</span><span class="t">Forensics</span></div>
