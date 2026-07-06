@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Broadcast Highlights — Ryker Lee</title>
+<meta name="description" content="Broadcast highlights from Ryker Lee: replay builds and camera angles from 350+ live sports productions across the Sioux Falls region." />
+<link rel="canonical" href="https://resume.rykerlee.me/highlights.html" />
+<meta name="theme-color" content="#0e1217" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230e1217'/%3E%3Crect x='4' y='4' width='56' height='56' rx='8' fill='none' stroke='%234f9dff' stroke-width='3'/%3E%3Ctext x='32' y='42' font-family='Arial,sans-serif' font-weight='700' font-size='26' fill='%234f9dff' text-anchor='middle'%3ERL%3C/text%3E%3C/svg%3E" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://resume.rykerlee.me/highlights.html" />
+<meta property="og:title" content="Broadcast Highlights — Ryker Lee" />
+<meta property="og:description" content="Replay builds and camera angles from 350+ live sports broadcasts across the Sioux Falls region." />
+<meta property="og:image" content="https://resume.rykerlee.me/images/profile.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --ink:#0e1217; --ink-2:#11161c; --panel:#161c24; --panel-2:#1b232c;
+  --line:#262e39; --line-soft:rgba(255,255,255,.07);
+  --text:#e7ebef; --dim:#98a2ae; --faint:#69727e;
+  --accent:#4f9dff; --accent-soft:rgba(79,157,255,.14); --accent-line:rgba(79,157,255,.42);
+  --tally:#ff5247;
+  --font-display:"Chakra Petch","Arial Narrow",system-ui,sans-serif;
+  --font-body:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --maxw:1180px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--ink);color:var(--text);
+  font-family:var(--font-body);font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:22px 22px;background-attachment:fixed;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+::selection{background:var(--accent);color:#04121f}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.channel{
+  display:flex;align-items:center;gap:14px;margin:0 0 30px;
+  font-family:var(--font-mono);font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);
+}
+.channel .num{color:var(--accent)}
+.channel .bar{flex:1;height:1px;background:var(--line)}
+.h2{font-family:var(--font-display);font-weight:700;font-size:clamp(1.7rem,4vw,2.6rem);line-height:1.05;letter-spacing:.01em;margin:0 0 6px}
+.lead{color:var(--dim);max-width:62ch}
+
+/* ---------- status bar ---------- */
+.statusbar{
+  position:sticky;top:0;z-index:50;background:rgba(14,18,23,.82);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+}
+.statusbar .wrap{display:flex;align-items:center;gap:18px;height:60px}
+.brand{display:flex;align-items:center;gap:11px;font-family:var(--font-display);font-weight:700;letter-spacing:.04em;white-space:nowrap}
+.brand .mark{
+  width:30px;height:30px;border:1px solid var(--accent);color:var(--accent);
+  display:grid;place-items:center;font-size:.82rem;border-radius:5px;background:var(--accent-soft);
+}
+.nav{display:flex;gap:4px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{
+  font-family:var(--font-mono);font-size:.78rem;letter-spacing:.04em;color:var(--dim);
+  padding:7px 11px;border-radius:6px;white-space:nowrap;transition:color .2s,background .2s;
+}
+.nav a:hover{color:var(--text);background:var(--panel)}
+.nav a.active{color:var(--accent);background:var(--accent-soft)}
+.status-pill{
+  display:flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:.72rem;
+  letter-spacing:.08em;color:var(--dim);white-space:nowrap;padding-left:6px;
+}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.dot.live{background:var(--tally)}
+.pulse{animation:pulse-live 2.4s ease-out infinite}
+@keyframes pulse-live{0%{box-shadow:0 0 0 0 rgba(255,82,71,.5)}70%{box-shadow:0 0 0 7px rgba(255,82,71,0)}100%{box-shadow:0 0 0 0 rgba(255,82,71,0)}}
+
+/* ---------- page head ---------- */
+.pagehead{padding:56px 0 8px}
+.live-tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:.72rem;letter-spacing:.14em;color:var(--tally);border:1px solid rgba(255,82,71,.4);border-radius:6px;padding:5px 10px;margin-bottom:16px}
+
+/* ---------- filters ---------- */
+.reel-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:26px 0 22px}
+.reel-stat{font-family:var(--font-mono);font-size:.78rem;color:var(--dim)}
+.reel-stat b{color:var(--accent)}
+.filters{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+.filters button{font-family:var(--font-mono);font-size:.74rem;color:var(--dim);background:transparent;border:1px solid var(--line);border-radius:6px;padding:6px 11px;cursor:pointer;transition:.2s}
+.filters button:hover{color:var(--text)}
+.filters button.on{color:var(--accent);border-color:var(--accent-line);background:var(--accent-soft)}
+
+/* ---------- video grid ---------- */
+.reel{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px;padding-bottom:74px}
+.clip{border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden;display:flex;flex-direction:column;transition:border-color .2s,transform .2s}
+.clip:hover{border-color:var(--accent-line);transform:translateY(-3px)}
+.clip .frame{position:relative;aspect-ratio:16/9;background:var(--ink-2)}
+.clip .frame iframe,.clip .frame video{position:absolute;inset:0;width:100%;height:100%;border:0}
+.clip .thumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.clip .play{
+  position:absolute;inset:0;width:100%;height:100%;display:grid;place-items:center;
+  background:linear-gradient(180deg,rgba(14,18,23,.05),rgba(14,18,23,.45));
+  border:0;cursor:pointer;transition:background .2s;
+}
+.clip .play:hover{background:linear-gradient(180deg,rgba(14,18,23,0),rgba(14,18,23,.25))}
+.clip .play .ring{
+  width:58px;height:58px;border-radius:50%;background:rgba(14,18,23,.72);border:1px solid var(--accent-line);
+  display:grid;place-items:center;color:var(--accent);backdrop-filter:blur(4px);transition:.2s;
+}
+.clip .play:hover .ring{background:var(--accent);color:#04121f}
+.clip .play svg{width:22px;height:22px;margin-left:3px}
+.clip .rec{
+  position:absolute;top:10px;left:10px;display:flex;align-items:center;gap:7px;
+  font-family:var(--font-mono);font-size:.64rem;letter-spacing:.12em;color:var(--text);
+  background:rgba(14,18,23,.72);border:1px solid var(--line);border-radius:6px;padding:4px 9px;backdrop-filter:blur(4px);
+}
+.clip .rec .dot{width:6px;height:6px}
+.clip .body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
+.clip h3{font-family:var(--font-display);font-weight:600;font-size:1.08rem;margin:0;letter-spacing:.01em;line-height:1.25}
+.clip .desc{margin:0;font-size:.9rem;color:var(--dim);flex:1}
+.clip .tags{display:flex;flex-wrap:wrap;gap:6px}
+.clip .t{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.04em;color:var(--dim);background:var(--ink-2);border:1px solid var(--line);border-radius:999px;padding:3px 9px;white-space:nowrap}
+.clip .t.role{color:var(--accent);border-color:var(--accent-line)}
+
+/* placeholder cards while a slot has no video yet */
+.clip.pending .frame{display:grid;place-items:center}
+.clip.pending .bars{position:absolute;inset:0;display:flex}
+.clip.pending .bars span{flex:1;opacity:.16}
+.clip.pending .bars span:nth-child(1){background:#fff}
+.clip.pending .bars span:nth-child(2){background:#e8e845}
+.clip.pending .bars span:nth-child(3){background:#45e8e8}
+.clip.pending .bars span:nth-child(4){background:#45e845}
+.clip.pending .bars span:nth-child(5){background:#e845e8}
+.clip.pending .bars span:nth-child(6){background:#e84545}
+.clip.pending .bars span:nth-child(7){background:#4545e8}
+.clip.pending .await{
+  position:relative;z-index:1;font-family:var(--font-mono);font-size:.7rem;letter-spacing:.18em;
+  color:var(--text);background:rgba(14,18,23,.82);border:1px solid var(--line);border-radius:6px;padding:7px 12px;
+}
+
+.empty{
+  border:1px dashed var(--line);border-radius:12px;padding:40px 24px;text-align:center;
+  font-family:var(--font-mono);font-size:.82rem;color:var(--faint);grid-column:1/-1;
+}
+
+/* ---------- footer ---------- */
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;padding:22px 0 28px;border-top:1px solid var(--line-soft);font-family:var(--font-mono);font-size:.74rem;color:var(--faint)}
+.foot a{color:var(--dim)}.foot a:hover{color:var(--accent)}
+
+/* ---------- reveal / focus / responsive ---------- */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.skip-link{position:absolute;left:-9999px;top:0;z-index:100;background:var(--accent);color:#04121f;font-family:var(--font-mono);font-size:.8rem;padding:10px 16px;border-radius:0 0 8px 0}
+.skip-link:focus{left:0}
+@media(max-width:860px){.status-pill{display:none}}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none;transition:none}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#reel">Skip to highlights</a>
+
+<!-- STATUS BAR -->
+<header class="statusbar">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="mark">RL</span>RYKER LEE</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="index.html#profile">Profile</a>
+      <a href="index.html#stack">Stack</a>
+      <a href="index.html#experience">Experience</a>
+      <a href="index.html#onair">On Air</a>
+      <a href="highlights.html" class="active">Highlights</a>
+      <a href="index.html#projects">Projects</a>
+      <a href="index.html#courses">Courses</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <span class="status-pill"><span class="dot live pulse"></span>REPLAY</span>
+  </div>
+</header>
+
+<!-- PAGE HEAD -->
+<section class="pagehead">
+  <div class="wrap">
+    <div class="channel"><span class="num">CH.08</span> / HIGHLIGHTS<span class="bar"></span></div>
+    <span class="live-tag"><span class="dot live pulse"></span>FROM THE TRUCK</span>
+    <h1 class="h2">Broadcast highlights</h1>
+    <p class="lead">Selected moments from live productions across the Sioux Falls region: replay packages I built in the moment, and camera angles of mine that the replay operator saved off the switcher.</p>
+
+    <div class="reel-bar">
+      <div class="reel-stat" id="reelStat"></div>
+      <div class="filters" id="filters"></div>
+    </div>
+  </div>
+</section>
+
+<!-- REEL -->
+<div class="wrap">
+  <div class="reel" id="reel"></div>
+
+  <div class="foot">
+    <span><a href="index.html">&larr; Back to the main channel lineup</a></span>
+    <span>&copy; <span id="yr"></span> Ryker Lee</span>
+  </div>
+</div>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+/* =====================================================================
+   HIGHLIGHTS DATA
+   ---------------------------------------------------------------------
+   Add one object per clip. Fields:
+
+   title  : short name shown on the card
+   desc   : one sentence of context (what happened, what you did)
+   role   : "Replay Build" | "Camera Angle" | "Video Board"
+            (this drives the filter buttons; add a new role string and
+             a matching entry in ROLES below to create a new filter)
+   venue  : where it was shot (shown as a tag)
+   sport  : shown as a tag
+   date   : e.g. "Feb 2026" (shown as a tag)
+
+   Then ONE of the following two:
+
+   yt     : the 11-character YouTube video ID (the part after v= in the
+            URL). Upload as Unlisted if you don't want it searchable.
+            Thumbnail and playback are handled automatically, and the
+            player only loads when someone presses play.
+
+   mp4    : path to a small self-hosted file, e.g. "videos/clip1.mp4".
+            Only use this for short clips (keep files well under 25 MB;
+            GitHub rejects anything over 100 MB and the repo gets heavy
+            fast). Optional: poster: "videos/clip1.jpg" for a thumbnail.
+
+   Leave yt as "" to keep a placeholder card visible while you finish
+   uploading; the card renders as AWAITING FEED until you fill it in.
+   ===================================================================== */
+const HIGHLIGHTS = [
+  {
+    title: "Sample: overtime winner replay package",
+    desc: "Replace me: three-angle replay build turned around during a live stoppage.",
+    role: "Replay Build",
+    venue: "Sanford Pentagon",
+    sport: "Basketball",
+    date: "2026",
+    yt: ""
+  },
+  {
+    title: "Sample: handheld goal-line angle",
+    desc: "Replace me: my camera angle on the game winner, saved off the switcher by the replay op.",
+    role: "Camera Angle",
+    venue: "Augustana",
+    sport: "Hockey",
+    date: "2026",
+    yt: ""
+  },
+  {
+    title: "Sample: video board sequence",
+    desc: "Replace me: in-house board sequence during a timeout show.",
+    role: "Video Board",
+    venue: "ASM Global",
+    sport: "Basketball",
+    date: "2026",
+    yt: ""
+  }
+];
+
+const ROLES = ["All", "Replay Build", "Camera Angle", "Video Board"];
+
+/* ===================== rendering (no edits needed below) ===================== */
+const reelEl = document.getElementById('reel');
+const fEl = document.getElementById('filters');
+const sEl = document.getElementById('reelStat');
+let active = "All";
+
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function tagRow(c){
+  return `<div class="tags">
+    <span class="t role">${esc(c.role)}</span>
+    <span class="t">${esc(c.venue)}</span>
+    <span class="t">${esc(c.sport)}</span>
+    <span class="t">${esc(c.date)}</span>
+  </div>`;
+}
+
+function frameFor(c, i){
+  if (c.yt) {
+    return `<div class="frame" data-i="${i}">
+      <img class="thumb" src="https://i.ytimg.com/vi/${encodeURIComponent(c.yt)}/hqdefault.jpg" alt="" loading="lazy" decoding="async" />
+      <button class="play" aria-label="Play: ${esc(c.title)}">
+        <span class="ring"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 21 12 6 21 6 3"/></svg></span>
+      </button>
+      <span class="rec"><span class="dot live"></span>REPLAY</span>
+    </div>`;
+  }
+  if (c.mp4) {
+    return `<div class="frame">
+      <video controls preload="none" ${c.poster ? `poster="${esc(c.poster)}"` : ''} src="${esc(c.mp4)}"></video>
+      <span class="rec"><span class="dot live"></span>REPLAY</span>
+    </div>`;
+  }
+  return `<div class="frame">
+    <div class="bars"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <span class="await">AWAITING FEED</span>
+  </div>`;
+}
+
+function render(){
+  const list = active === "All" ? HIGHLIGHTS : HIGHLIGHTS.filter(c => c.role === active);
+  if (!HIGHLIGHTS.length) {
+    reelEl.innerHTML = `<div class="empty">NO SIGNAL &mdash; add clips to the HIGHLIGHTS array in highlights.html</div>`;
+  } else if (!list.length) {
+    reelEl.innerHTML = `<div class="empty">NO CLIPS ON THIS CHANNEL YET</div>`;
+  } else {
+    reelEl.innerHTML = list.map(c => {
+      const i = HIGHLIGHTS.indexOf(c);
+      return `<article class="clip reveal ${(!c.yt && !c.mp4) ? 'pending' : ''}">
+        ${frameFor(c, i)}
+        <div class="body">
+          <h3>${esc(c.title)}</h3>
+          <p class="desc">${esc(c.desc)}</p>
+          ${tagRow(c)}
+        </div>
+      </article>`;
+    }).join('');
+  }
+  const live = HIGHLIGHTS.filter(c => c.yt || c.mp4).length;
+  sEl.innerHTML = `<b>${list.length}</b> clip${list.length === 1 ? '' : 's'} on this channel &middot; <b>${live}</b> live`;
+  observeReveals();
+}
+
+/* lazy YouTube: swap thumbnail for iframe only on click */
+reelEl.addEventListener('click', e => {
+  const btn = e.target.closest('.play');
+  if (!btn) return;
+  const frame = btn.closest('.frame');
+  const c = HIGHLIGHTS[+frame.dataset.i];
+  if (!c || !c.yt) return;
+  frame.innerHTML = `<iframe
+    src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(c.yt)}?autoplay=1&rel=0"
+    title="${esc(c.title)}"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen></iframe>`;
+});
+
+/* filters */
+fEl.innerHTML = ROLES.map(r => `<button data-r="${esc(r)}" class="${r === 'All' ? 'on' : ''}">${esc(r)}</button>`).join('');
+fEl.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  active = b.dataset.r;
+  [...fEl.children].forEach(x => x.classList.toggle('on', x === b));
+  render();
+});
+
+/* reveal on scroll */
+let io;
+function observeReveals(){
+  if (io) io.disconnect();
+  io = new IntersectionObserver(es => {
+    es.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, { threshold: .12 });
+  document.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
+}
+render();
+</script>
+</body>
+</html>
