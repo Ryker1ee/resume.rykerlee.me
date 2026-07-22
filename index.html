@@ -394,6 +394,17 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
     <h2 class="h2 reveal">Experience</h2>
     <div class="tl" style="margin-top:22px">
       <div class="tl-item reveal">
+        <div class="tl-when">Jul 2026 &ndash; Present<span class="loc">South Dakota</span></div>
+        <div>
+          <h3 class="tl-role">Sports Events Associate</h3>
+          <div class="tl-org">Midco Sports &middot; Midcontinent</div>
+          <ul>
+            <li>Crew live televised college sports productions for the regional sports network across South Dakota, from mobile production units to central command.</li>
+            <li>Operate camera, instant replay, and PTZ positions for football, hockey, and basketball broadcasts.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-item reveal">
         <div class="tl-when">Spring 2026<span class="loc">Burgos, Spain</span></div>
         <div>
           <h3 class="tl-role">Study Abroad &middot; Universidad de Burgos</h3>
@@ -488,6 +499,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
     </div>
 
     <div class="venues">
+      <div class="venue reveal"><h4>Midco Sports</h4><div class="tags"><span class="t">Regional Sports Network</span><span class="t">Jul 2026 &ndash; Present</span><span class="t">South Dakota</span></div><p>Sports Events Associate crewing live televised college athletics statewide: camera, replay, and PTZ across truck shows and central command productions.</p></div>
       <div class="venue reveal"><h4>Dakota State University Athletics</h4><div class="tags"><span class="t">Game Day Production</span><span class="t">Aug 2024 &ndash; Present</span><span class="t">Madison, SD</span></div><p>Every home football, soccer, volleyball, and basketball broadcast across recent seasons (~95 shows), including the hosted NAIA conference women's basketball tournament.</p></div>
       <div class="venue reveal"><h4>ASM Global</h4><div class="tags"><span class="t">AV / Broadcast</span><span class="t">Feb 2024 &ndash; Present</span><span class="t">Sioux Falls, SD</span></div><p>Cameras, instant replay, directing, and in-house video board for hockey, basketball, and concerts, including the DI Summit League championship two years running.</p></div>
       <div class="venue reveal"><h4>Sioux Falls Skyforce</h4><div class="tags"><span class="t">Game Day Production</span><span class="t">Jan 2024 &ndash; Present</span><span class="t">Sioux Falls, SD</span></div><p>Broadcast cameras and AV transitions during live professional basketball games.</p></div>
@@ -582,7 +594,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 document.getElementById('yr').textContent = new Date().getFullYear();
 
 /* ----- ticker ----- */
-const ticks = ["Dakota State Trojans","ASM Global","Sioux Falls Skyforce","Augustana Vikings","Sanford Pentagon","Sioux Falls Canaries","NAIA","Frontier Conference","NBA G League","CCHA","NSIC","Summit League","USHL","NCAA Division I","NCAA Division II","American Association"];
+const ticks = ["Midco Sports Network","Dakota State Trojans","ASM Global","Sioux Falls Skyforce","Augustana Vikings","Sanford Pentagon","Sioux Falls Canaries","NAIA","Frontier Conference","NBA G League","CCHA","NSIC","Summit League","USHL","NCAA Division I","NCAA Division II","American Association"];
 const tEl = document.getElementById('ticker');
 const tHTML = ticks.map(t=>`<span class="chip">${t}</span>`).join('');
 tEl.innerHTML = tHTML + tHTML.replace(/class="chip"/g,'class="chip" aria-hidden="true"');
