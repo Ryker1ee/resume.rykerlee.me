@@ -219,7 +219,7 @@ document.getElementById('yr').textContent = new Date().getFullYear();
 
    title  : short name shown on the card
    desc   : one sentence of context (what happened, what you did)
-   role   : "Replay Build" | "Camera Angle" | "Video Board"
+   role   : "Replay Comp" | "Camera Comp"
             (this drives the filter buttons; add a new role string and
              a matching entry in ROLES below to create a new filter)
    venue  : where it was shot (shown as a tag)
@@ -242,6 +242,15 @@ document.getElementById('yr').textContent = new Date().getFullYear();
    uploading; the card renders as AWAITING FEED until you fill it in.
    ===================================================================== */
 const HIGHLIGHTS = [
+  {
+    title: "Augustana Football \u00b7 Replay Builds \u00b7 Sep 12",
+    desc: "In-game replay packages I built live during the September 12, 2026 football broadcast against Minot State, turned around inside stoppages.",
+    role: "Replay Comp",
+    venue: "Augustana",
+    sport: "Football",
+    date: "Sep 12, 2026",
+    yt: "NvxVXL2i5zE"
+  },
   {
     title: "Augustana Hockey \u00b7 Replay Builds \u00b7 Oct 31",
     desc: "In-game replay packages I built live during the October 31, 2025 hockey broadcast, turned around inside stoppages.",
