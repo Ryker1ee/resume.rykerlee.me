@@ -356,7 +356,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
         <p>Away from the keyboard, I have crewed more than 350 live sports broadcasts across the Sioux Falls region as a camera, replay, directing, and video board operator. I am drawn to work that needs both precise troubleshooting and calm execution against a live clock.</p>
         <div class="meta-grid">
           <div><div class="k">Location</div><div class="val">Sioux Falls, SD</div></div>
-          <div><div class="k">Education</div><div class="val">B.S. Cyber Operations &amp; B.S. Network &amp; Security Admin &middot; Minor: Spanish &middot; DSU 2024&ndash;2028</div></div>
+          <div><div class="k">Education</div><div class="val">B.S. Cyber Operations &amp; B.S. Network &amp; Security Admin &middot; Minors: Spanish &amp; Artificial Intelligence &middot; DSU 2024&ndash;2028</div></div>
           <div><div class="k">Languages</div><div class="val">English &middot; Spanish (Seal of Biliteracy)</div></div>
           <div><div class="k">Status</div><div class="val">Open to internships &amp; broadcast crew work</div></div>
         </div>
@@ -601,6 +601,12 @@ tEl.innerHTML = tHTML + tHTML.replace(/class="chip"/g,'class="chip" aria-hidden=
 
 /* ----- coursework (data-driven) ----- */
 const COURSES = [
+  {code:"CSC 321",title:"Cyber Law and Policy",term:"Fall 2026",status:"in_progress",category:"Major"},
+  {code:"CSC 387",title:"Routing and Switching",term:"Fall 2026",status:"in_progress",category:"Major"},
+  {code:"CSC 388",title:"Computer Forensics Fundamentals",term:"Fall 2026",status:"in_progress",category:"Major"},
+  {code:"CSC 230",title:"Tech Foundations: Ethics",term:"Fall 2026",status:"in_progress",category:"Minor"},
+  {code:"MATH 281",title:"Introduction to Statistics",term:"Fall 2026",status:"in_progress",category:"Major"},
+  {code:"SPAN 311",title:"Spanish Language C1 (Universidad de Burgos)",term:"Spring 2026",status:"completed",category:"Minor"},
   {code:"CSC 428",title:"Reverse Engineering",term:"Fall 2025",status:"completed",category:"Major"},
   {code:"CSC 436",title:"Offensive Network Security",term:"Fall 2025",status:"completed",category:"Major"},
   {code:"CSC 439",title:"Threat Hunting & Incident Response",term:"Fall 2025",status:"completed",category:"Major"},
@@ -641,8 +647,8 @@ function renderCourses(){
       <div class="ttl">${c.title}</div>
       <div class="meta">${c.term} &middot; ${c.category}</div>
     </div>`).join('');
-  const total = COURSES.length, majors = COURSES.filter(c=>c.category==='Major').length;
-  sEl.innerHTML = `<b>${total}</b> courses completed &middot; <b>${majors}</b> in major`;
+  const total = COURSES.filter(c=>c.status==='completed').length, current = COURSES.filter(c=>c.status==='in_progress').length, majors = COURSES.filter(c=>c.category==='Major').length;
+  sEl.innerHTML = `<b>${total}</b> courses completed &middot; <b>${current}</b> in progress &middot; <b>${majors}</b> in major`;
 }
 fEl.innerHTML = cats.map(c=>`<button data-c="${c}" class="${c==='All'?'on':''}">${c}</button>`).join('');
 fEl.addEventListener('click', e=>{
